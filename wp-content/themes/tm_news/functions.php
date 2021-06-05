@@ -122,10 +122,21 @@ add_action( 'after_setup_theme', 'tm_news_content_width', 0 );
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function tm_news_widgets_init() {
-	register_sidebar(
+	/* register_sidebar(
 		array(
 			'name'          => esc_html__( 'Sidebar', 'tm_news' ),
 			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'tm_news' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	); */
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Footer WIDGETS', 'tm_news' ),
+			'id'            => 'footer_widgets',
 			'description'   => esc_html__( 'Add widgets here.', 'tm_news' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
@@ -136,46 +147,95 @@ function tm_news_widgets_init() {
 }
 add_action( 'widgets_init', 'tm_news_widgets_init' );
 
-/**
- * Enqueue scripts and styles.
- */
+
 function tm_news_scripts() {
-	wp_enqueue_style( 'tm_news-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'tm_news-style', 'rtl', 'replace' );
+	wp_enqueue_style(
+		'tm_news-style',
+		get_stylesheet_uri(),
+		array(),
+		_S_VERSION
+	);
+	wp_enqueue_style( 
+		'materialdesignicons',  
+		get_template_directory_uri() . "/assets/vendors/mdi/css/materialdesignicons.min.css" , 
+		array(), _S_VERSION );
+	
+	wp_enqueue_style( 
+		'aos',  
+		get_template_directory_uri() . "/assets/vendors/aos/dist/aos.css/aos.css" , 
+		array(), _S_VERSION );
 
-	wp_enqueue_script( 'tm_news-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'tm_news-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	
+	wp_enqueue_style( 
+		'owl.carousel',  
+		get_template_directory_uri() . "/assets/vendors/owl.carousel/dist/assets/owl.carousel.min.css" , 
+		array(), _S_VERSION );
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+	wp_enqueue_style( 
+		'carousel.min',   /* /assets/owl.carousel.min.css */
+		get_template_directory_uri() . "/assets/vendors/owl.carousel/dist/assets/owl.theme.default.min.css" , 
+		array(), _S_VERSION );
+		
+	
+	wp_enqueue_style( 
+		'style',   /* /assets/owl.carousel.min.css */
+		get_template_directory_uri() . "style.css" , 
+		array(), _S_VERSION );
+			
+	
+	
+	wp_enqueue_script( 
+		'tvendor.bundle.base', 
+		get_template_directory_uri() . 
+		'/assets/js/vendor.bundle.base.js', array(), 
+		_S_VERSION, true );
+	/* js  */
+	wp_enqueue_script( 
+		'vendor.bundle', 
+		 get_template_directory_uri() . 
+		 'assets/vendors/js/vendor.bundle.base.js', 
+		 array(), _S_VERSION, true );
+	wp_enqueue_script( 
+		'owl.carousel', 
+		get_template_directory_uri() . 
+		'/assets/vendors/owl.carousel/dist/owl.carousel.min.js', 
+		array(), _S_VERSION, true );
+	wp_enqueue_script( 
+		'demo', 
+		get_template_directory_uri() . 
+		'/assets/js/demo.js', 
+		array(), _S_VERSION, true );
+		
+	
+	
 }
 add_action( 'wp_enqueue_scripts', 'tm_news_scripts' );
 
 /**
  * Implement the Custom Header feature.
  */
-require get_template_directory() . '/inc/custom-header.php';
-
+/* require get_template_directory() . '/inc/custom-header.php';
+ */
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/template-tags.php';
-
+/* require get_template_directory() . '/inc/template-tags.php';
+ */
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require get_template_directory() . '/inc/template-functions.php';
-
+/* require get_template_directory() . '/inc/template-functions.php';
+ */
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
-
+/* require get_template_directory() . '/inc/customizer.php';
+ */
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+/* if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
-}
+} */
 
+require get_template_directory() . '/inc/widgets/about-us-widget.php';
